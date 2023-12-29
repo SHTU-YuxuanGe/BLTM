@@ -376,8 +376,8 @@ def main(args):
         logits1= F.softmax(classifier(data), dim=1)
         logits1_max = torch.max(logits1,dim=1)
         mask = logits1_max[0]>threshold
-        distilled_example_index_list.extend(indexes[mask])
-        distilled_example_labels_list.extend(logits1_max[1].cpu()[mask])
+        distilled_example_index_list.extend(indexes[mask.cpu()])
+        distilled_example_labels_list.extend(logits1_max[1].cpu()[mask.cpu()])
     print("Distilling finished")
     distilled_example_index = np.array(distilled_example_index_list)
     distilled_bayes_labels = np.array(distilled_example_labels_list)
